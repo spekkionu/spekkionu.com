@@ -1,5 +1,5 @@
 document.addEventListener("turbo:before-render", async (event) => {
-
+    if(!document.startViewTransition) return;
     let fn = null
 
     event.preventDefault()
