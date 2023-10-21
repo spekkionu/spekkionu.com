@@ -1,12 +1,12 @@
 const fs = require('node:fs')
 const site = require("../src/_data/site");
 
-const stylesheetShortcode = (path) => {
+const stylesheetShortcode = (path, inline = false) => {
     if (process.env.NODE_ENV !== "production") return `<link rel="stylesheet" href="${path}" />`;
     let url = new URL(path, site.url);
     url.searchParams.set("v", site.version);
 
-    return `<link rel="stylesheet" href="${url.pathname + url.search}" />`;
+    return `<link rel="stylesheet" href="${url.pathname + url.search}" ${inline ? 'inline' : ''} />`;
 };
 
 const versionFilter = (path) => {

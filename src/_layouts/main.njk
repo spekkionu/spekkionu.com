@@ -30,7 +30,7 @@
         {% include head ignore missing %}
     {% endif %}
     {% include 'gtm-head.njk' %}
-    {% stylesheet "/assets/css/styles.css" %}
+    {% stylesheet "/assets/css/styles.css", true %}
     <script type="application/ld+json">
         {"@context": "http://schema.org", "@type": "WebSite", "url": "{{ site.url }}", "name": "{{ site.name }}"}
     </script>
