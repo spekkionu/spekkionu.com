@@ -62,7 +62,19 @@
 }
 
 .archive__post__title {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+@media (min-width: 361px) {
+    .archive__post__title {
+        font-size: 1.25rem;
+        font-weight: normal;
+    }
+}
+@media (min-width: 768px) {
+    .archive__post__title {
+        font-size: 1.5rem;
+    }
 }
 
 .archive__post__title a {

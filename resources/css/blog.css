@@ -17,8 +17,13 @@
     color: var(--link-color);
 }
 .posts__post__title {
-    font-size: 2rem;
+    font-size: 1.25rem;
     font-weight: bold;
+}
+@media (min-width: 768px) {
+    .posts__post__title {
+        font-size: 2rem;
+    }
 }
 
 .posts__post__categories {

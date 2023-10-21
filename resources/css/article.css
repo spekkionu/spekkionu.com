@@ -5,11 +5,16 @@
     display: block;
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     letter-spacing: 2px;
     color: var(--text-gray);
 }
-.post__categories{
+@media (min-width: 768px) {
+    .post__date {
+        font-size: 1.5rem;
+    }
+}
+.post__categories {
     margin-bottom: 1rem;
     font-style: italic;
     color: var(--text-gray);
