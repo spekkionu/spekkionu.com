@@ -9,6 +9,8 @@ module.exports = class {
     async data() {
         // Transform .js files, run through Babel
         const files = [
+            path.resolve(__dirname, '../../../resources/js/turbo.es2017-umd.js.js'),
+            path.resolve(__dirname, '../../../resources/js/quicklink.umd.js.js'),
             path.resolve(__dirname, '../../../resources/js/debounce.js'),
             path.resolve(__dirname, '../../../resources/js/cardlink.js'),
             path.resolve(__dirname, '../../../resources/js/prefetch.js'),
