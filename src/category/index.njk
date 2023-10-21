@@ -1,0 +1,19 @@
+---
+layout: main.njk
+permalink: "/category/"
+eleventyExcludeFromCollections: false
+meta_description: "A list of all categories on the site."
+---
+
+<div class="category-list">
+    <h1 class="category__title">Categories</h1>
+    <ul class="category-list__list">
+        {% for category in collections.posts | getAllCategories %}
+            <li>
+                <a href="/category/{{ category.category | slugify }}/">
+                    {{ category.category }} ({{ category.count }})
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

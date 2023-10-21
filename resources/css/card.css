@@ -1,0 +1,85 @@
+
+.cardlist {
+    break-inside: avoid-column;
+    margin-bottom: 1rem;
+}
+
+.cardlist__title {
+    font-weight: bold;
+}
+
+.cardlist__cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.deck {
+    margin: 1rem 0;
+    border: solid 1px var(--border);
+}
+
+.deck__title {
+    padding: .5rem .75rem;
+    background-color: var(--dark-background);
+    color: white;
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+}
+
+.deck__content {
+    padding: .75rem;
+    background-color: var(--light-background);
+    color: var(--text-color);
+    font-size: .9rem;
+    column-gap: 1rem;
+}
+
+@media (min-width: 576px) {
+    .deck__content {
+        column-count: 2;
+    }
+}
+
+@media (min-width: 768px) {
+    .deck__content {
+        column-count: 3;
+    }
+}
+
+.deck__content .cardlist {
+    margin-bottom: .25rem;
+}
+
+.cardlist.columns {
+    margin: 1rem 0;
+    border: solid 1px var(--border);
+    padding: .75rem;
+    font-size: .9rem;
+    column-gap: 1rem;
+    background-color: var(--light-background);
+    color: var(--text-color);
+}
+.cardlist.columns .cardlist__title {
+    column-span: all;
+    font-size: 1.1rem;
+}
+
+.deck .cardlist.columns {
+    margin: 0;
+    border: none;
+}
+
+@media (min-width: 576px) {
+    .deck__content,
+    .cardlist.columns {
+        column-count: 2;
+    }
+}
+
+@media (min-width: 768px) {
+    .deck__content,
+    .cardlist.columns {
+        column-count: 3;
+    }
+}
