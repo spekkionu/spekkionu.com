@@ -1,7 +1,10 @@
 ---
 layout: main.njk
 permalink: /{{ year.year }}/
-meta_description: "Archive for {{ year.year }}"
+noindex: true
+eleventyComputed:
+    title: "{{ year.year }} Archive"
+    meta_description: "Archive for {{ year.year }}"
 pagination:
     data: collections.years
     size: 1

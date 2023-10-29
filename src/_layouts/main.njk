@@ -9,7 +9,17 @@
     {% if meta_description %}
         <meta name="description" content="{{ meta_description }}">
     {% endif %}
-    <meta name="robots" content="index, follow">
+    {% if noindex  %}
+        <meta name="robots" content="noindex, follow">
+    {% else %}
+        <meta name="robots" content="index, follow">
+    {% endif %}
+    {% if canonical  %}
+        <link rel="canonical" href="{{ canonical  }}">
+    {% else %}
+      <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+    {% endif %}
+    <meta name="generator" content="{{ eleventy.generator }}">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/spekkionu-180x180.png">
     <link rel="icon" type="image/png" href="/assets/images/spekkionu-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="/assets/images/spekkionu-16x16.png" sizes="16x16">
