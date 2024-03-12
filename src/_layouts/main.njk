@@ -39,7 +39,6 @@
     {% if head %}
         {% include head ignore missing %}
     {% endif %}
-    {% include 'gtm-head.njk' %}
     {% stylesheet "/assets/css/styles.css", true %}
     <script type="application/ld+json">
         {"@context": "http://schema.org", "@type": "WebSite", "url": "{{ site.url }}", "name": "{{ site.name }}"}
@@ -50,10 +49,8 @@
     </script>
     {% endif %}
     <script defer src="{{ "/assets/js/app.js" | versioned }}"></script>
-    {% include 'google-analytics.njk' %}
 </head>
 <body>
-{% include 'gtm-body.njk' %}
 <a href="#content" class="sr-only">scroll to content</a>
 <div class="site">
     {% include "header.njk" %}
