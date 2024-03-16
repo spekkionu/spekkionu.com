@@ -40,6 +40,7 @@
         {% include head ignore missing %}
     {% endif %}
     {% stylesheet "/assets/css/styles.css", true %}
+    <link rel="preload" href="{{ "/assets/js/app.js" | versioned }}" as="script">
     <script type="application/ld+json">
         {"@context": "http://schema.org", "@type": "WebSite", "url": "{{ site.url }}", "name": "{{ site.name }}"}
     </script>

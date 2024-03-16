@@ -26,9 +26,9 @@ document.addEventListener("turbo:before-render", async (event) => {
 })
 
 document.addEventListener('turbo:load', function(){
-    window.initCardLinks();
     window.prefetchInit();
-    if(document.getElementById('disqus_thread')){
+    window.initCardLinks();
+    if (document.getElementById('disqus_thread')) {
         lazyLoadDisqus();
     }
 })

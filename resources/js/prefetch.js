@@ -24,12 +24,9 @@
     window.prefetchInit = function () {
         if (!quicklink) return;
 
-        document.querySelectorAll('.site-content a').forEach((el) => {
+        document.querySelectorAll('.site-content a:not(.cardlink)').forEach((el) => {
             el.addEventListener('mouseover', (e) => {
                 preload(el);
-            });
-            el.addEventListener('mouseout', (e) => {
-                preload.cancel();
             });
         });
     }
@@ -38,9 +35,6 @@
         document.querySelectorAll('.site-sidebar a').forEach((el) => {
             el.addEventListener('mouseover', (e) => {
                 preload(el);
-            });
-            el.addEventListener('mouseout', (e) => {
-                preload.cancel();
             });
         });
         window.prefetchInit();

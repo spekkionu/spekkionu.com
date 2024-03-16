@@ -1,6 +1,23 @@
 (function () {
     window.cardCache = new Set();
+
+    const preload = _.debounce((el) => {
+        const url = el.getAttribute('href');
+        if (!url) return;
+        if (window.cardCache.has(url)) return;
+        let img = new Image();
+        img.src = url;
+        window.cardCache.add(url);
+    }, 150);
+
     window.initCardLinks = function () {
+        document.querySelectorAll('.cardlink').forEach((el) => {
+            el.addEventListener('mouseover', (e) => {
+                preload(el);
+            });
+        });
+    }
+    document.addEventListener('DOMContentLoaded', function () {
         const modal = document.getElementById('cardpopup');
         document.addEventListener('click', (e) => {
             if (!e.target.classList.contains('cardlink')) return;
@@ -27,26 +44,6 @@
             e.stopPropagation();
             document.getElementById('cardpopup').close();
         });
-
-        const preload = _.debounce((el) => {
-            const url = el.getAttribute('href');
-            if (!url) return;
-            if (window.cardCache.has(url)) return;
-            let img = new Image();
-            img.src = url;
-            window.cardCache.add(url);
-        }, 150);
-
-        document.querySelectorAll('.cardlink').forEach((el) => {
-            el.addEventListener('mouseover', (e) => {
-                preload(el);
-            });
-            el.addEventListener('mouseout', (e) => {
-                preload.cancel();
-            });
-        });
-    }
-    document.addEventListener('DOMContentLoaded', function () {
         window.initCardLinks();
     });
 })();
