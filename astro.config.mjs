@@ -89,17 +89,17 @@ export default defineConfig({
         scope: '/',
         icons: [
           {
-            "src": "/assets/images/spekkionu-192x192.png",
+            "src": "/images/spekkionu-192x192.png",
             "type": "image/png",
             "sizes": "192x192"
           },
           {
-            "src": "/assets/images/spekkionu-512x512.png",
+            "src": "/images/spekkionu-512x512.png",
             "type": "image/png",
             "sizes": "512x512"
           },
           {
-            "src": "/assets/images/maskable_icon.png",
+            "src": "/images/maskable_icon.png",
             "type": "image/png",
             "sizes": "196x196",
             "purpose": "any maskable"
