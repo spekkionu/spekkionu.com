@@ -5,7 +5,7 @@ interface Props {
   height?: number;
   alt?: string;
   loading?: "lazy" | "eager";
-  priority?: boolean;
+  fetchpriority?: "low" | "auto" | "high";
 }
 const {
   card,
@@ -13,7 +13,7 @@ const {
   height = 370,
   alt = "",
   loading = "lazy",
-  priority = false,
+  fetchpriority = "auto",
 } = Astro.props;
 
 const cardUrl = (card: string) => {
@@ -27,6 +27,6 @@ const cardUrl = (card: string) => {
   height={height}
   alt={alt || card}
   loading={loading}
-  fetchpriority={priority ? "high" : undefined}
+  fetchpriority={fetchpriority}
   src={cardUrl(card)}
 />
