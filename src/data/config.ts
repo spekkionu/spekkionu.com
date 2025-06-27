@@ -8,7 +8,7 @@ export default {
   gtm_tag_id: import.meta.env.GTM_TAG_ID,
   google_analytics: import.meta.env.GOOGLE_ANALYTICS,
   disqus_short_name: "spekkionu",
-  comments_enabled: true,
+  comments_enabled: false,
   twitter: "@thejonbernardi",
   pagination: 10,
 };
