@@ -1,0 +1,29 @@
+---
+interface Props {
+  card: string;
+  width?: number;
+  height?: number;
+  alt?: string;
+  loading?: "lazy" | "eager";
+}
+const {
+  card,
+  width = 265,
+  height = 370,
+  alt = "",
+  loading = "lazy",
+} = Astro.props;
+
+const cardUrl = (card: string) => {
+  return `https://gatherer.wizards.com/Handlers/Image.ashx?size=small&amp;type=card&amp;name=${encodeURIComponent(card.replace("’", "'"))}&amp;options=`;
+};
+---
+
+<img
+  {...Astro.props}
+  width={width}
+  height={height}
+  alt={alt || card}
+  loading={loading}
+  src={cardUrl(card)}
+/>

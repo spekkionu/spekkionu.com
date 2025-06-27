@@ -1,0 +1,22 @@
+---
+import Layout from "../layouts/Main.astro";
+import ArchivePost from "../components/ArchivePost.astro";
+import {getActivePostsCollection} from "../utils/utils";
+const meta_description = "Explore our blog archives to find a collection of all our posts, organized by year. Discover past articles and insights from our blog history.";
+const allPosts = await getActivePostsCollection();
+---
+<Layout title="Archives" meta_description={meta_description}>
+    <div class="archive archive--full">
+        <div class="archive__posts">
+            {allPosts.map((post, index) => {
+                const lastyear = index > 0 ? (new Date(allPosts[index - 1].data.date)).getUTCFullYear().toString() : null;
+                const year = (new Date(post.data.date)).getUTCFullYear().toString();
+                const url = `/${year}/`;
+                return (
+                    <ArchivePost post={post} last={lastyear} current={year} groupurl={url}  />
+                );
+            })}
+        </div>
+    </div>
+
+</Layout>

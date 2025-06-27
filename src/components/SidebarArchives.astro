@@ -1,0 +1,65 @@
+---
+import { DateTime } from "luxon";
+import {getActivePostsCollection} from "../utils/utils";
+
+type Archive = {
+    year: string;
+    count: number;
+    months: {
+        month: string;
+        name: string;
+        count: number;
+    }[];
+};
+
+const archive = await getActivePostsCollection().then(posts => {
+    let archive: Archive[] = [];
+    posts.forEach(post => {
+
+
+        // Find or create the year entry
+        let yearEntry = archive.find(y => y.year === post.data.year);
+        if (!yearEntry) {
+            yearEntry = { year: post.data.year, count: 0, months: [] };
+            archive.push(yearEntry);
+        }
+
+        // Increment the count for the year
+        yearEntry.count++;
+
+        // Find or create the month entry
+        let monthEntry = yearEntry.months.find(m => m.month === post.data.month);
+        if (!monthEntry) {
+            monthEntry = { month: post.data.month, name: post.data.monthname, count: 0 };
+            yearEntry.months.push(monthEntry);
+        }
+
+        // Increment the count for the month
+        monthEntry.count++;
+    });
+
+    archive.forEach(year => year.months.sort((a, b) => Number(b.month) - Number(a.month)));
+    archive.sort((a, b) => Number(b.year) - Number(a.year)); // Sort years descending
+
+    return archive;
+});
+---
+<section class="sidebar__section sidebar__section--archives">
+    <header class="sidebar__section__title"><span class="sidebar__section__title__monthly">Monthly </span>Archives</header>
+    <nav class="sidebar__section__body">
+        <ul class="sidebar__section--archives__years">
+            {archive.map(year => (
+                    <li class="sidebar__section--archives__item sidebar__section--archives__item--year">
+                        <a href={"/" + year.year + "/"}>{year.year} ({year.count})</a>
+                        <ul class="sidebar__section--archives__months">
+                            {year.months.map(month => (
+                                    <li class="sidebar__section--archives__item sidebar__section--archives__item--month">
+                                        <a href={"/" + year.year + "/" + month.month + "/"}>{month.name} ({month.count})</a>
+                                    </li>
+                            ))}
+                        </ul>
+                    </li>
+            ))}
+        </ul>
+    </nav>
+</section>

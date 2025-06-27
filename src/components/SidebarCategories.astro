@@ -1,0 +1,39 @@
+---
+import {getActivePostsCollection, getCategoryData} from "../utils/utils";
+
+type Category = {
+    slug: string;
+    name: string;
+    url: string;
+    full_url: string;
+    count: number;
+};
+
+const categories = await getActivePostsCollection().then(posts => {
+    const categoryMap = new Map();
+
+    posts.forEach(post => {
+        if (post.data.categories) {
+            post.data.categories.forEach(category => {
+                if (!categoryMap.has(category)) {
+                    categoryMap.set(category, { ...getCategoryData(category), count: 0 } as Category);
+                }
+                categoryMap.get(category).count++;
+            });
+        }
+    });
+
+    return Array.from(categoryMap.values()).sort((a, b) => a.name.localeCompare(b.name)) as Category[];
+});
+
+---
+<section class="sidebar__section sidebar__section--categories">
+    <header class="sidebar__section__title">Categories</header>
+    <nav class="sidebar__section__body">
+        <ul>
+            {categories.map(category => (
+                <li><a href={category.url}>{category.name} ({category.count})</a></li>
+            ))}
+        </ul>
+    </nav>
+</section>

@@ -1,0 +1,33 @@
+---
+import {getCategoriesFromPostData, type Post} from "../utils/utils";
+
+type Props = {
+    post: Post;
+    last?: string;
+    current?: string;
+    groupurl?: string;
+};
+
+const {post, last, current, groupurl} = Astro.props as Props;
+
+const categories = getCategoriesFromPostData(post.data.categories);
+
+---
+<div class="archive__post">
+    {current ? (
+        <div class="archive__post__group">
+            {groupurl && last !== current ? <a href={groupurl} class="archive__post__group__link">{current}</a> : ''}
+            {!groupurl && last !== current ? current : ''}
+        </div>
+    ) : ''}
+    <div class="archive__post__date">{post.data.date.toFormat('LLL dd')}</div>
+    <div class="archive__post__content">
+        <div class="archive__post__title">
+            <a href={post.data.url}>{post.data.title}</a>
+        </div>
+        <time datetime={post.data.date.toISO()} class="archive__post__fulldate">{post.data.date.toFormat('DDD')}</time>
+        <div class="archive__post__categories">
+            posted in {categories.map(cat => <a class="posts__post__category" href={cat.url}>{cat.name}</a>)}
+        </div>
+    </div>
+</div>

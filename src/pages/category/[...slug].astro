@@ -1,0 +1,51 @@
+---
+import Layout from "../../layouts/Main.astro";
+import ArchivePost from "../../components/ArchivePost.astro";
+import type {GetStaticPaths} from 'astro';
+import {getActivePostsCollection, getCategoriesFromPostData, type Post} from "../../utils/utils";
+
+export const getStaticPaths = (async () => {
+    const posts = await getActivePostsCollection(false, false);
+
+    let categories = [];
+    posts.forEach(post => {
+        const cats = getCategoriesFromPostData(post.data.categories);
+        cats.forEach(cat => {
+
+            let record = categories.find(c => c.params.slug === cat.slug);
+            if (!record) {
+                record = {
+                    params: {slug: cat.slug},
+                    props: {category: cat.name, posts: []}
+                };
+                categories.push(record);
+            }
+            record.props.posts.push(post);
+        });
+    });
+
+    return categories;
+}) satisfies GetStaticPaths;
+
+interface Props {
+    posts: Post[];
+    category: string;
+}
+
+const {posts, category} = Astro.props;
+
+const meta_description = `Explore our blog category: ${category}. Discover all posts related to ${category}, organized by category. Dive into our articles and insights from various topics in our blog history.`;
+
+---
+<Layout title={`${category} Category Archive`} meta_description={meta_description}>
+    <div class="archive archive--year">
+        <h1 class="archive__title">Category: {category}</h1>
+        <div class="archive__posts">
+            {posts.map((post, index) => {
+              const lastmonth = index > 0 ? posts[index - 1].data.year : null;
+              return <ArchivePost post={post} last={lastmonth} current={post.data.year} />
+            })}
+        </div>
+    </div>
+
+</Layout>

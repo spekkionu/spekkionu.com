@@ -1,0 +1,39 @@
+---
+const { url, title, excerpt } = Astro.props
+
+import FaceBookIcon from '../assets/icons/facebook-square-brands.svg';
+import TwitterIcon from '../assets/icons/twitter-x-square-brands.svg';
+import LinkedInIcon from '../assets/icons/linkedin-square-brands.svg';
+---
+<div class="sharing sharing--post post__sharing">
+    <a
+            target="_blank"
+            rel="noopener noreferrer"
+            class="sharing__link sharing__link--facebook"
+            href={`https://facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`}
+            title="Share on Facebook"
+            aria-label="Share on Facebook">
+        <FaceBookIcon aria-label="Facebook" aria-hidden="true" class="icon icon--sharing"  role="img" />
+        <span>Share</span>
+    </a>
+    <a
+            class="sharing__link sharing__link--twitter-x"
+            target="_blank"
+            rel="noopener noreferrer"
+            href={`https://twitter.com/intent/tweet/?text=${encodeURIComponent(title)}&amp;url=${encodeURIComponent(url)}`}
+            title="Share on Twitter"
+            aria-label="Share on Twitter">
+        <TwitterIcon aria-label="X Logo" aria-hidden="true" class="icon icon--sharing"  role="img" />
+        <span>Post</span>
+    </a>
+    <a
+            class="sharing__link sharing__link--linkedin"
+            target="_blank"
+            rel="noopener noreferrer"
+            href={`https://www.linkedin.com/shareArticle?mini=true&amp;url=${encodeURIComponent(url)}&amp;title=${encodeURIComponent(title)}&amp;summary=${encodeURIComponent(excerpt)}&amp;source=${encodeURIComponent(url)}`}
+            title="Share on LinkedIn"
+            aria-label="Share on LinkedIn">
+        <LinkedInIcon aria-label="LinkedIn" aria-hidden="true" class="icon icon--sharing"  role="img" />
+        <span>Share</span>
+    </a>
+</div>

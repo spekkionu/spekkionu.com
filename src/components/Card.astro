@@ -1,0 +1,21 @@
+---
+import escape from "lodash/escape";
+
+const cardUrl = (card: string) => {
+  return `https://gatherer.wizards.com/Handlers/Image.ashx?size=large&amp;type=card&amp;name=${encodeURIComponent(card.replace("’", "\'"))}&amp;options=`;
+};
+
+let card = Astro.props.card;
+if (!card) {
+  const content = await Astro.slots.render("default");
+  card = content.trim();
+}
+---
+
+<a
+  href={cardUrl(card)}
+  class="cardlink"
+  data-turbo="false"
+  target="_blank"
+  data-card={escape(card)}><slot /></a
+>

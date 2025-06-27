@@ -1,0 +1,51 @@
+---
+import type {GetStaticPaths, Page} from 'astro';
+import Layout from '../../layouts/Main.astro';
+import PostTeaser from '../../components/PostTeaser.astro';
+import site from "../../data/config";
+import {getActivePostsCollection, type Post} from "../../utils/utils";
+import ArrowLeft from "../../assets/icons/arrow-left.svg";
+import ArrowRight from "../../assets/icons/arrow-right.svg";
+
+interface Props {
+  page: Page<Post[]>;
+}
+
+export const getStaticPaths = (async ({paginate}) => {
+    const posts = await getActivePostsCollection(false, true);
+
+    return paginate(posts, {pageSize: site.pagination});
+}) satisfies GetStaticPaths;
+
+const {page} = Astro.props as Props;
+
+if (page.currentPage === 1) {
+    return Astro.redirect('/', 301);
+}
+
+---
+
+<Layout title={`${site.name} | Page ${page.currentPage}`} full_title={true} meta_description={site.description}>
+    <Fragment slot="head">
+        {page.currentPage === 2 ? <link rel="prev" href={site.url} /> : null}
+        {page.currentPage > 2 ? <link rel="prev" href={`${site.url}${page.url.prev}/`} /> : null}
+        {page.url.next ? <link rel="next" href={`${site.url}${page.url.next}/`} /> : null}
+    </Fragment>
+    <div>
+        {page.data.map(post => (
+            <PostTeaser post={post}/>
+        ))}
+    </div>
+
+    <div class="pagination">
+      <div class="pagination__item pagination__item--previous">
+        {page.currentPage > 1 ? <a class="pagination__link" href={page.currentPage > 2 ? page.url.prev + '/' : '/'}><ArrowLeft class="icon" role="img" aria-hidden="true" /> Newer</a> : ''}
+      </div>
+        <div class="pagination__item pagination__item--archive">
+          <a class="pagination__link" href="/archives/">Blog Archives</a>
+        </div>
+        <div class="pagination__item pagination__item--next">
+          {page.url.next ? <a class="pagination__link" href={page.url.next + '/'}>Older <ArrowRight class="icon" role="img" aria-hidden="true" /></a> : ''}
+        </div>
+    </div>
+</Layout>

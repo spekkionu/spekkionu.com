@@ -1,0 +1,33 @@
+---
+import { render } from "astro:content";
+import BlogPost from "../../../layouts/BlogPost.astro";
+import CardImage from '../../../components/CardImage.astro';
+import Deck from '../../../components/Deck.astro';
+import CardList from '../../../components/CardList.astro';
+import Card from '../../../components/Card.astro';
+import {getActivePostsCollection, type Post } from "../../../utils/utils";
+
+export async function getStaticPaths() {
+  const posts = await getActivePostsCollection();
+
+  return posts.map((post: Post) => {
+    return {
+      params: { year: post.data.year, month: post.data.month, slug: post.data.slug },
+      props: {post},
+    };
+  });
+}
+
+type Props = {
+  post: Post;
+};
+
+const {post} = Astro.props as Props;
+
+const { Content } = await render(post);
+
+---
+
+<BlogPost post={post.data}>
+  <Content components={{CardImage,Deck,CardList,Card}} />
+</BlogPost>

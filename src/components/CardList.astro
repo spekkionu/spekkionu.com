@@ -1,0 +1,55 @@
+---
+import sum from "lodash/sum";
+import { stripHtml } from "string-strip-html";
+import CardLink from "./Card.astro";
+
+interface Props {
+  title?: string;
+  counts?: boolean;
+  columns?: boolean;
+}
+const { title = "", counts = true, columns = false } = Astro.props;
+
+const CardMatcher = /^\s*(?:\*(?<count>\d+)x?\s+)?(?<name>.+)\s*$/;
+
+const content = stripHtml(await Astro.slots.render("default")).result;
+let cards = content
+  .replace(/\r?\n/g, "\n")
+  .split("\n")
+  .filter(line => line.trim() !== "")
+  .map(card => {
+    card = card.trim();
+    let matches = CardMatcher.exec(card);
+    let name = matches.groups?.name || card;
+    let count = Number(matches.groups?.count || 1);
+    return {
+      name: name,
+      count: count,
+    };
+  });
+---
+
+<div class:list={["cardlist", { columns: columns }]}>
+  {
+    title && (
+      <div class="cardlist__title">
+        {title}
+        {counts && (
+          <span class="cardlist__count">
+            ({sum(cards.map(card => card.count))})
+          </span>
+        )}
+      </div>
+    )
+  }
+  <ul class="cardlist__cards">
+    {
+      cards.map(card => (
+        <li class="cardlist__card">
+          {counts && <span class="cardlist__quantity">{card.count}x</span>}{" "}
+          <CardLink>{card.name}</CardLink>
+        </li>
+      ))
+    }
+  </ul>
+</div>

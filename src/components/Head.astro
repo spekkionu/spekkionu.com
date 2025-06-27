@@ -1,0 +1,50 @@
+---
+import site from '../data/config';
+import { ClientRouter } from "astro:transitions";
+import { pwaInfo } from 'virtual:pwa-info';
+
+interface Props {
+
+    title?: string;
+    full_title?: boolean;
+    meta_description?: string;
+    noindex?: boolean;
+    canonical?: string;
+    meta_tags?: {name?: string; property?: string; content: string}[];
+}
+
+const {title, full_title = false, meta_description, noindex = false, canonical, meta_tags = []} = Astro.props as Props;
+import '../assets/css/styles.css';
+
+---
+<head>
+    <meta charset="utf-8" />
+    <title>{title || site.name}{(title && !full_title) && ` | ${site.name}`}</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="view-transition" content="same-origin">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="generator" content={Astro.generator} />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/spekkionu-180x180.png">
+    <link rel="icon" type="image/png" href="/images/spekkionu-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/spekkionu-16x16.png" sizes="16x16">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml">
+    <link href={new URL("feed.xml", Astro.site)} rel="alternate" title={site.name} type="application/rss+xml">
+    <link rel="canonical" href={canonical || Astro.url}>
+    {meta_description && <meta name="description" content={meta_description}>}
+    { pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} /> }
+    <meta name="author" content={site.author || 'Jonathan Bernardi'}>
+    {noindex ? <meta name="robots" content="noindex, follow"> : <meta name="robots" content="index, follow">}
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content={site.name}>
+    {meta_tags && meta_tags.map((tag) => (
+        <meta name={tag.name} property={tag.property} content={tag.content} />
+    ))}
+    <slot name="head" />
+
+    <script type="application/ld+json" set:html={JSON.stringify({"@context": "http://schema.org", "@type": "WebSite", "url": site.url, "name": site.name})} />
+    <slot name="schema" />
+    <ClientRouter />
+    <script src="../assets/js/app.js"></script>
+</head>
