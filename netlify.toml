@@ -7,10 +7,6 @@
 command = "bun --bun astro dev"
 autoLaunch = false
 
-[[plugins]]
-package = "netlify-plugin-purgecss"
-
-
 # REDIRECT and HEADERS examples
 
 # Redirect rule example
